@@ -38,8 +38,17 @@ impl Dir {
     }
 
     pub fn mkdir_at<P: AsRef<Path>>(&self, relative_path: P) -> Result<()> {
-
+        unimplimented!();
     }
+
+    pub fn rename_at<Ps: AsRef<Path>, Pd: AsRef<Path>>(&self, src_path: Ps, dst_dir: Dir, dst_path: Pd) -> Result<()> {
+        unimplimented!();
+    }
+}
+
+trait FsAtFileExt {
+    fn rename_at<Pd: AsRef<Path>>(&self, dst_dir: Dir, dst_path: Pd) -> Result<()>;
+    fn link_at<Pd: AsRef<Path>>(&self, dst_dir: Dir, dst_path: Pd) -> Result<()>;
 }
 
 
