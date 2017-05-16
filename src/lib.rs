@@ -5,12 +5,20 @@ mod sys {
     pub struct Dir {
         fd: RawFd,
     }
+
+    pub struct ReadDir {
+        _x: (),
+    }
 }
 
 #[cfg(windows)]
 mod sys {
     pub struct Dir {
         fd: FileHandle,
+    }
+
+    pub struct ReadDir {
+        _x: (),
     }
 }
 
@@ -30,13 +38,6 @@ impl Dir {
         unimplimented!();
     }
 
-    /// Open a file relative to this directory
-    ///
-    /// TODO: a bunch of crazy open mechanisms
-    pub fn open_file_at<P: AsRef<Path>>(&self, relative_path: P) -> Result<std::io::File> {
-        unimplimented!();
-    }
-
     pub fn mkdir_at<P: AsRef<Path>>(&self, relative_path: P) -> Result<()> {
         unimplimented!();
     }
@@ -44,14 +45,31 @@ impl Dir {
     pub fn rename_at<Ps: AsRef<Path>, Pd: AsRef<Path>>(&self, src_path: Ps, dst_dir: Dir, dst_path: Pd) -> Result<()> {
         unimplimented!();
     }
+
+    /// Get an iterator over the elements of a directory
+    pub fn read_dir(&self) -> Result<ReadDir> {
+        unimplimented!();
+    }
+}
+
+/// Iterator over entries within a directory
+///
+/// Provided by [`Dir::read_dir()`](TODO LINK)
+pub struct ReadDir {
+    inner: sys::ReadDir
 }
 
 trait FsAtFileExt {
     fn rename_at<Pd: AsRef<Path>>(&self, dst_dir: Dir, dst_path: Pd) -> Result<()>;
     fn link_at<Pd: AsRef<Path>>(&self, dst_dir: Dir, dst_path: Pd) -> Result<()>;
+
+    /// Open a file relative to a directory
+    ///
+    /// TODO: OpenBuilder, various flags, etc.
+    pub fn open_at<P: AsRef<Path>>(&self, dir: Dir, relative_path: P) -> Result<std::io::File> {
+        unimplimented!();
+    }
 }
-
-
 
 #[cfg(test)]
 mod tests {
