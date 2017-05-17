@@ -26,6 +26,12 @@ pub struct Dir {
     sys: sys::Dir,
 }
 
+// 2 types of operations in `Dir`:
+//  - those that operate on self
+//  - those that operate on items relative to self
+//
+// Unclear the right way to structure/name them so the difference is clear.
+
 impl Dir {
     /// Open a directory at a given path (absolute or relative to the current working directory)
     pub fn open<P: AsRef<Path>>(path: P) -> Result<Self>
@@ -38,16 +44,21 @@ impl Dir {
         unimplimented!();
     }
 
-    pub fn mkdir_at<P: AsRef<Path>>(&self, relative_path: P) -> Result<()> {
+    pub fn mkdir<P: AsRef<Path>>(&self, relative_path: P) -> Result<()> {
         unimplimented!();
     }
 
-    pub fn rename_at<Ps: AsRef<Path>, Pd: AsRef<Path>>(&self, src_path: Ps, dst_dir: Dir, dst_path: Pd) -> Result<()> {
+    pub fn rename<Ps: AsRef<Path>, Pd: AsRef<Path>>(&self, src_path: Ps, dst_dir: Dir, dst_path: Pd) -> Result<()> {
         unimplimented!();
     }
 
     /// Get an iterator over the elements of a directory
     pub fn read_dir(&self) -> Result<ReadDir> {
+        unimplimented!();
+    }
+
+    // FIXME: use actual stat info
+    pub fn stat<P: AsRef<Path>>(&self, relative_path: P) -> Result<()> {
         unimplimented!();
     }
 }
